@@ -154,3 +154,19 @@ function calculateCGPA() {
     document.getElementById("result").innerText = `Final CGPA: ${cgpa}`;
     breakdown.hidden = false;
 }
+
+async function loadVisitCount() {
+    const el = document.getElementById("visitNumber");
+    if (!el) return;
+
+    try {
+        const res = await fetch("/api/visits", { method: "GET" });
+        if (!res.ok) throw new Error("Failed to load visits");
+        const data = await res.json();
+        el.textContent = Number.isFinite(data.count) ? data.count : "—";
+    } catch (err) {
+        el.textContent = "—";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", loadVisitCount);

@@ -140,3 +140,10 @@ tbody tr:hover {
     margin-top: 30px;
     color: #2e7d32;
 }
+
+.visit-count {
+    text-align: center;
+    margin: 14px 0 30px;
+    font-size: 14px;
+    color: #666;
+}
