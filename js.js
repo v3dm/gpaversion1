@@ -169,7 +169,7 @@ async function loadVisitCount() {
 
     try {
         const today = getLocalDateKey();
-        const last = localStorage.getItem("lastVisitDate");
+        const last = localStorage.getItem("lastVisitDate_v2");
         const shouldIncrement = last !== today;
         const url = shouldIncrement ? "/api/visits?increment=1" : "/api/visits?increment=0";
         const res = await fetch(url, { method: "GET" });
@@ -177,7 +177,7 @@ async function loadVisitCount() {
         const data = await res.json();
         el.textContent = Number.isFinite(data.count) ? data.count : "—";
         if (shouldIncrement) {
-            localStorage.setItem("lastVisitDate", today);
+            localStorage.setItem("lastVisitDate_v2", today);
         }
     } catch (err) {
         el.textContent = "—";
