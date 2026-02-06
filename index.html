@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CGPA Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>CGPA Calculator</h1>
+
+<div class="controls">
+    <select id="year">
+        <option value="">Select Year</option>
+        <option value="1">Year 1</option>
+        <option value="2">Year 2</option>
+        <option value="3">Year 3</option>
+    </select>
+
+    <select id="sem">
+        <option value="">Select Semester</option>
+        <option value="1">Sem 1</option>
+        <option value="2">Sem 2</option>
+        <option value="3">Sem 3</option>
+        <option value="4">Sem 4</option>
+        <option value="5">Sem 5</option>
+        <option value="6">Sem 6</option>
+    </select>
+
+    <button onclick="loadSubjects()">Load Subjects</button>
+</div>
+
+<form id="subjectsForm" class="subjects-container"></form>
+
+<button class="calculate-btn" onclick="calculateCGPA()">Calculate CGPA</button>
+
+<div id="breakdown" class="breakdown" hidden>
+    <h2>Result Breakdown</h2>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Credits</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody id="breakdownBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<h2 id="result"></h2>
+
+<script src="js.js"></script>
+</body>
+</html>
