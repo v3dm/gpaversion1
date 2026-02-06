@@ -33,7 +33,11 @@ export default async function handler(req, res) {
     }
 
     const data = await apiRes.json();
-    const count = data.result === null ? 0 : data.result;
+    let count = 0;
+    if (data.result !== null && data.result !== undefined) {
+      const n = Number(data.result);
+      count = Number.isFinite(n) ? n : 0;
+    }
     return res.status(200).json({ count });
   } catch (err) {
     return res.status(500).json({ error: "Unexpected error" });
