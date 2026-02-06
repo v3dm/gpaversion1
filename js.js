@@ -155,15 +155,30 @@ function calculateCGPA() {
     breakdown.hidden = false;
 }
 
+function getLocalDateKey() {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+
 async function loadVisitCount() {
     const el = document.getElementById("visitNumber");
     if (!el) return;
 
     try {
-        const res = await fetch("/api/visits", { method: "GET" });
+        const today = getLocalDateKey();
+        const last = localStorage.getItem("lastVisitDate");
+        const shouldIncrement = last !== today;
+        const url = shouldIncrement ? "/api/visits?increment=1" : "/api/visits?increment=0";
+        const res = await fetch(url, { method: "GET" });
         if (!res.ok) throw new Error("Failed to load visits");
         const data = await res.json();
         el.textContent = Number.isFinite(data.count) ? data.count : "—";
+        if (shouldIncrement) {
+            localStorage.setItem("lastVisitDate", today);
+        }
     } catch (err) {
         el.textContent = "—";
     }

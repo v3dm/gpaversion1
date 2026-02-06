@@ -13,8 +13,14 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Server not configured" });
   }
 
+  const increment =
+    req.query && Object.prototype.hasOwnProperty.call(req.query, "increment")
+      ? req.query.increment !== "0"
+      : true;
+
   try {
-    const apiRes = await fetch(`${url}/incr/visits`, {
+    const endpoint = increment ? "incr" : "get";
+    const apiRes = await fetch(`${url}/${endpoint}/visits`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -27,7 +33,8 @@ export default async function handler(req, res) {
     }
 
     const data = await apiRes.json();
-    return res.status(200).json({ count: data.result });
+    const count = data.result === null ? 0 : data.result;
+    return res.status(200).json({ count });
   } catch (err) {
     return res.status(500).json({ error: "Unexpected error" });
   }
